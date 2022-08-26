@@ -16,3 +16,6 @@ rootProject.name = "wheelutils"
 include ':app'
 include ':3dviewmodule'
 include ':commonlyutils'
+include ':commonlydialog'
+include ':lib_base'
+include ':app_test'

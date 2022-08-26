@@ -1,0 +1,65 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'kotlin-android-extensions'
+}
+def config = rootProject.ext.android
+def library = rootProject.ext.dependencies
+def androidx = rootProject.ext.androidx
+android {
+    compileSdk config.compileSdkVersion
+    defaultConfig {
+        minSdk config.minSdkVersion
+        targetSdk config.targetSdkVersion
+        multiDexEnabled true
+        resConfigs "zh-rCN"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures{
+        dataBinding = true
+    }
+    lintOptions {
+        checkReleaseBuilds false
+        abortOnError false
+    }
+
+    //为设置添加依赖设置
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+}
+
+dependencies {
+    api androidx.kotlin_core
+    api androidx.appcompat
+    api androidx.material
+    api androidx.constraintlayout
+    api androidx.junit
+    api androidx.runner
+    api androidx.espresso_core
+    api androidx.multidex
+    api androidx.recyclerview
+
+    //PowerMock框架依赖导入
+    testImplementation 'org.mockito:mockito-core:2.8.9'
+    testImplementation 'org.mockito:mockito-inline:3.3.3'//用于mock final类
+    testImplementation 'org.powermock:powermock-api-mockito2:2.0.9'
+    // 这个mockito2必须引入，否则的话会找不到PowerMockito类
+    testImplementation 'org.powermock:powermock-module-junit4:2.0.9'
+    testImplementation 'org.powermock:powermock-core:2.0.9'
+}
